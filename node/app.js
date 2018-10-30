@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
 
-const projectID = 'thegrinch-project';
-const serviceName = 'profiler-node';
+const projectID = 'ygrinshteyn-sandbox';
+const serviceName = "nodejs-profiler";
 
 require("@google-cloud/profiler").start({
     serviceContext: {
@@ -12,6 +12,10 @@ require("@google-cloud/profiler").start({
     },
     logLeveL: 3,
 });
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
 
 function blockCpuFor(ms) {
 	var now = new Date().getTime();
@@ -29,10 +33,10 @@ function getRandomInt(max) {
   }
 
 app.get('/', (req, res) => {
-    console.log('request made');
     const delay = getRandomInt(5000);
+    console.log('request made');
     blockCpuFor(delay);
-    res.send('Blocked CPU for ' + delay);
+    res.send('Delayed for ' + delay);
 })
 
 app.listen(8080, () => console.log(`Example app listening on port 8080!`))
