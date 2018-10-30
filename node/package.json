@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/yuriatgoogle/profilerdemo#readme",
   "dependencies": {
+    "@google-cloud/profiler": "^0.2.2",
     "express": "^4.16.4"
   }
 }
