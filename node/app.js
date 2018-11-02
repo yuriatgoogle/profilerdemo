@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-const projectID = 'ygrinshteyn-sandbox';
+const projectID = 'thegrinch-project';
 const serviceName = "nodejs-profiler";
 
 require("@google-cloud/profiler").start({
