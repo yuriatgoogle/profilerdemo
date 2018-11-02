@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
 	"time"
 
@@ -34,12 +35,22 @@ func main() {
 }
 func handle(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[golang-profiler:handle] Entered")
-	// spin CPU
-	blockCPU()
-	fmt.Fprintln(w, "Hello Henry!")
+	// spin CPU for that many seconds
+	blockCPU(rand.Intn(5))
+	fmt.Fprintln(w, "blocked CPU!")
 	log.Printf("[golang-profiler:handle] Exited")
 }
 
-func blockCPU() {
-	<-time.After(time.Duration(10))
+func blockCPU(delay int) {
+	log.Printf("blocking CPU")
+	result := 0
+	timeToExit := time.Now().Local().Add(time.Second * time.Duration(delay))
+	for true {
+		r := rand.New(rand.NewSource(99))
+		result += r.Int() * r.Int()
+		if time.Now().After(timeToExit) {
+			log.Print("exiting loop")
+			return
+		}
+	}
 }
