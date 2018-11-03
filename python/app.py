@@ -24,8 +24,9 @@ def blockCPU(delay):
 @app.route('/')
 def doProfile():
     # generate random number to delay for:
-    blockCPU(5)
-    return "CPU blocked!"
+    timeToBlock = random.randint(0,10)
+    blockCPU(timeToBlock)
+    return ("CPU blocked for " + str(timeToBlock))
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')
