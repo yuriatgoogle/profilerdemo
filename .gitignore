@@ -2,6 +2,7 @@ node_modules
 .token
 package-lock.json
 .gitignore
+.vscode
 
 # for Java
 # Compiled class file
