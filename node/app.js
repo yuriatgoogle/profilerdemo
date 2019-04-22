@@ -1,14 +1,14 @@
 const express = require('express');
 const app = express();
 
-const projectID = 'thegrinch-project';
+const projectID = 'csp-testing';
 const serviceName = "nodejs-profiler";
 
 require("@google-cloud/profiler").start({
     serviceContext: {
         projectID: projectID,        
         service: serviceName,
-        version: "0.0.1"
+        version: "eks"
     },
     logLeveL: 3,
 });
@@ -28,15 +28,12 @@ function blockCpuFor(ms) {
 	}	
 }
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-  }
-
 app.get('/', (req, res) => {
     const delay = getRandomInt(5000);
     console.log('request made');
     blockCpuFor(delay);
     res.send('Delayed for ' + delay);
+    console.log('delayed for ' + delay);
 })
 
-app.listen(8080, () => console.log(`Example app listening on port 8080!`))
+app.listen(8081, () => console.log(`Example app listening on port 8081!`))

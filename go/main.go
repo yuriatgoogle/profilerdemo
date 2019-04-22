@@ -5,6 +5,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"strconv"
 	"time"
 
 	"cloud.google.com/go/profiler"
@@ -15,7 +16,7 @@ const (
 )
 
 var (
-	projectID = "thegrinch-project"
+	projectID = "csp-testing"
 )
 
 func main() {
@@ -25,7 +26,7 @@ func main() {
 	if err := profiler.Start(profiler.Config{
 		ProjectID:      projectID,
 		Service:        serviceName,
-		ServiceVersion: "0.0.1",
+		ServiceVersion: "go-eks",
 		DebugLogging:   true}); err != nil {
 		log.Fatalln(err)
 	}
@@ -36,8 +37,9 @@ func main() {
 func handle(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[golang-profiler:handle] Entered")
 	// spin CPU for that many seconds
-	blockCPU(rand.Intn(5))
-	fmt.Fprintln(w, "blocked CPU!")
+	delay := rand.Intn(5)
+	blockCPU(delay)
+	fmt.Fprintln(w, "blocked CPU for "+strconv.Itoa(delay))
 	log.Printf("[golang-profiler:handle] Exited")
 }
 

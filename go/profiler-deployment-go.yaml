@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: profiler-go-deployment
+  labels:
+    app: profiler-demo-go
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: profiler-demo-go
+  template:
+    metadata:
+      labels:
+        app: profiler-demo-go
+    spec:
+      volumes:
+      - name: stackdriver-profiler
+        secret:
+          secretName: stackdriver-profiler
+      containers:
+      - name: profiler-go
+        image: gcr.io/csp-testing/profiler-go:latest
+        volumeMounts:
+        - name: stackdriver-profiler
+          mountPath: /var/secrets/google
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/google/stackdriver-profiler.json
+        ports:
+        - containerPort: 8080
